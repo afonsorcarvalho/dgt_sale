@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report 
+            id="action_dgt_report_saleorder"
+            string="Cotação Vendas"
+            model="sale.order" 
+            report_type="qweb-pdf"
+            file="dgt_sale.dgt_sale_report_template" 
+            name="dgt_sale.dgt_sale_report_template"
+            print_report_name="(object.state in ('draft', 'sent') and 'Cotação - %s' % (object.name)) or 'Pedido - %s' % (object.name)"
+        />
+
+       
+    </data>
+</odoo>
