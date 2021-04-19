@@ -116,7 +116,14 @@
                 <h3 >Valor total da cotação:    
                 <span t-field="doc.amount_total"/> </h3>   
             </div>
-
+            <p t-field="doc.note" />
+            <p t-if="doc.payment_term_id.note">
+                <span t-field="doc.payment_term_id.note"/>
+            </p>
+            <p id="fiscal_position_remark" t-if="doc.fiscal_position_id and doc.fiscal_position_id.sudo().note">
+                <strong>Fiscal Position Remark:</strong>
+                <span t-field="doc.fiscal_position_id.sudo().note"/>
+            </p>
             <!-- <table class="table table-sm o_main_table">
                 <thead>
                     <tr> -->
@@ -246,14 +253,7 @@
                 </div>
             </div> -->
             <t t-call="dgt_sale.report_sales_assinatura_template"></t>
-            <p t-field="doc.note" />
-            <p t-if="doc.payment_term_id.note">
-                <span t-field="doc.payment_term_id.note"/>
-            </p>
-            <p id="fiscal_position_remark" t-if="doc.fiscal_position_id and doc.fiscal_position_id.sudo().note">
-                <strong>Fiscal Position Remark:</strong>
-                <span t-field="doc.fiscal_position_id.sudo().note"/>
-            </p>
+          
 
             <div t-if="doc.signature" class="mt32 ml16 mr16" name="signature">
                 <div class="offset-8">
