@@ -3,4 +3,5 @@
 #from . import controllers
 #from . import models
 #from . import tests
-from . import wizard
+#from . import wizard
+from . import report
