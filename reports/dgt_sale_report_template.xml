@@ -86,9 +86,9 @@
                     Foto meramente ilustrativa</div>
                     </div>
                     <br/><br/>
-                    <!-- <div class="text-justify center" >
-                        <h6><span  t-field="line.name" /></h6>
-                    </div> -->
+                    <div class="text-justify" >
+                        <span  t-field="line.name" />
+                    </div>
                     <div class="container border" >
                         <h4>Item <t t-esc="counter"/> - <span t-field="line.product_id.display_name"/></h4>
                        <!-- <div class="row ">
