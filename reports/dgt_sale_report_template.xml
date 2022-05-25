@@ -91,20 +91,20 @@
                     </div>
                     <div class="container border" >
                         <h3>Item <t t-esc="counter"/> - <span t-field="line.product_id.display_name"/></h3>
-                        <div class="row ">
+                       <!-- <div class="row ">
                             <div class="col-6 text-uppercase">
-                                <h4>Quantidade <span t-field="line.product_uom_qty"/>
-                                <span t-field="line.product_uom" groups="uom.group_uom"/></h4>
+                                <h6>Quantidade <span t-field="line.product_uom_qty"/>
+                                <span t-field="line.product_uom" groups="uom.group_uom"/></h6>
                             </div>
                             <div class="col-6 text-right text-uppercase">
                                <h4>Valor Unitário: R$ <span t-field="line.price_unit"/></h4> 
                             </div>
                             
-                        </div>
+                        </div>-->
                         <br/>
                         <div class="container  bg-light text-dark" >
-                            <div class="col-12 text-right text-uppercase"> <h3>Valor Total Item <t t-esc="counter"/> :   <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
-                                <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/></h3>
+                            <div class="col-12 text-right text-uppercase"> <h6>Valor Total Item <t t-esc="counter"/> :   <span t-field="line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <span t-field="line.price_total" groups="account.group_show_line_subtotals_tax_included"/></h6>
                             </div>
                         </div>
                         
