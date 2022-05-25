@@ -113,9 +113,11 @@
                 </t>
             </t>
             <div class="container shadow bg-dark text-white text-uppercase p-3">
-                <h3 >Valor total da cotação:    
-                <span t-field="doc.amount_total"/> </h3>   
+                <h4 >Valor total da cotação:    
+                <span t-field="doc.amount_total"/> </h4>   
             </div>
+            <br></br>
+            <br></br>
             <p t-field="doc.note" />
             <p t-if="doc.payment_term_id.note">
                 <span t-field="doc.payment_term_id.note"/>
