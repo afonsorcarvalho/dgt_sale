@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <template id="dgt_proposal_cover">
-    <div style="padding-top:120px; text-align:center; font-family:Helvetica,Arial,sans-serif; color:#2c3e50;">
-        <div style="color:#e8730c; font-size:12px; font-weight:700; letter-spacing:3px;">PROPOSTA COMERCIAL</div>
-        <div style="font-size:34px; font-weight:800;">Nº <t t-esc="doc.name"/></div>
+    <div style="font-family:Helvetica,Arial,sans-serif; color:#2c3e50;">
+        <table style="width:100%; border-collapse:collapse; border-bottom:3px solid #2c3e50;">
+            <tr>
+                <td style="vertical-align:bottom; padding-bottom:8px;">
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:60px;"/>
+                </td>
+                <td style="vertical-align:bottom; text-align:right; padding-bottom:8px; font-size:10px; color:#6b7280; line-height:1.5;">
+                    <t t-esc="company.partner_id.legal_name or company.name"/><br/>
+                    <t t-if="company.partner_id.cnpj_cpf">CNPJ <t t-esc="company.partner_id.cnpj_cpf"/><br/></t>
+                    <t t-if="company.partner_id.inscr_est">IE <t t-esc="company.partner_id.inscr_est"/><br/></t>
+                    <t t-if="company.dgt_afe_anvisa">AFE Anvisa <t t-esc="company.dgt_afe_anvisa"/></t>
+                </td>
+            </tr>
+        </table>
+
+        <div style="text-align:center; padding-top:210px;">
+            <div style="color:#e8730c; font-size:13px; font-weight:700; letter-spacing:4px;">PROPOSTA COMERCIAL</div>
+            <div style="font-size:40px; font-weight:800; margin-top:6px;">Nº <t t-esc="doc.name"/></div>
+            <div style="width:60px; height:4px; background:#e8730c; margin:16px auto;"></div>
+            <div style="font-size:10px; color:#6b7280; letter-spacing:1px; text-transform:uppercase; margin-top:26px;">Destinatário</div>
+            <div style="font-size:20px; font-weight:700; margin-top:4px;"><t t-esc="doc.partner_id.commercial_partner_id.name"/></div>
+            <div t-if="doc.partner_id.parent_id" style="font-size:13px; color:#6b7280;"><t t-esc="doc.partner_id.name"/></div>
+            <div t-if="is_public and doc.dgt_bid_ref" style="font-size:13px; color:#374151; margin-top:8px;">
+                Ref.: <t t-esc="doc.dgt_bid_ref"/>
+            </div>
+        </div>
+
+        <table style="width:100%; border-collapse:collapse; border-top:1px solid #dfe2e5; margin-top:230px;">
+            <tr>
+                <td style="padding-top:10px; width:33%;">
+                    <div style="font-size:9px; color:#6b7280; text-transform:uppercase; letter-spacing:.6px;">Emissão</div>
+                    <div style="font-size:13px; font-weight:700;"><span t-field="doc.date_order" t-options='{"widget": "date"}'/></div>
+                </td>
+                <td style="padding-top:10px; width:33%; text-align:center;">
+                    <div style="font-size:9px; color:#6b7280; text-transform:uppercase; letter-spacing:.6px;">Validade</div>
+                    <div style="font-size:13px; font-weight:700;">
+                        <t t-if="doc.validity_date"><span t-field="doc.validity_date" t-options='{"widget": "date"}'/></t>
+                        <t t-else=""><t t-if="is_public">60 dias</t><t t-else="">30 dias</t></t>
+                    </div>
+                </td>
+                <td style="padding-top:10px; width:34%; text-align:right;">
+                    <div style="font-size:9px; color:#6b7280; text-transform:uppercase; letter-spacing:.6px;">Consultor</div>
+                    <div style="font-size:13px; font-weight:700;"><t t-esc="doc.user_id.name"/></div>
+                    <div style="font-size:10px; color:#6b7280;"><t t-esc="doc.user_id.partner_id.mobile or doc.user_id.partner_id.phone or ''"/> <t t-esc="doc.user_id.email or ''"/></div>
+                </td>
+            </tr>
+        </table>
+
+        <div t-if="not is_public and company.dgt_proposal_differentials"
+             style="margin-top:18px; background:#f5f6f7; border-left:4px solid #e8730c; padding:8px 14px; font-size:10px; color:#374151;">
+            <div style="font-weight:700; color:#e8730c; letter-spacing:1px; font-size:9px; margin-bottom:2px;">POR QUE A DIAGNÓSTICA</div>
+            <div t-raw="company.dgt_proposal_differentials"/>
+        </div>
     </div>
 </template>
 </odoo>

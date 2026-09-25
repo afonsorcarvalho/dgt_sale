@@ -43,6 +43,7 @@
         'reports/dgt_proposal_report.xml',
         'reports/proposal/layout.xml',
         'reports/proposal/cover.xml',
+        'reports/proposal/letter_summary.xml',
         'reports/proposal/proposal_report.xml',
     ],
     # only loaded in demonstration mode
