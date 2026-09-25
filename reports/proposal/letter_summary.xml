@@ -2,17 +2,65 @@
 <odoo>
 <template id="dgt_proposal_letter_summary">
     <div style="font-family:Helvetica,Arial,sans-serif; color:#2c3e50; font-size:11px;">
+        <t t-set="cp" t-value="doc.partner_id.commercial_partner_id"/>
+        <t t-set="contact" t-value="doc.partner_id if doc.partner_id.parent_id else False"/>
         <table style="width:100%; border-collapse:collapse; margin-bottom:12px;">
             <tr>
-                <td style="vertical-align:top;">
-                    <div style="font-size:10px; color:#6b7280; text-transform:uppercase; letter-spacing:.6px;">Destinatário</div>
-                    <div style="font-size:14px; font-weight:700;"><t t-esc="doc.partner_id.commercial_partner_id.name"/></div>
-                    <div t-if="doc.partner_id.commercial_partner_id.cnpj_cpf" style="color:#6b7280;">CNPJ/CPF <t t-esc="doc.partner_id.commercial_partner_id.cnpj_cpf"/></div>
-                    <div t-if="doc.partner_id.parent_id" style="color:#374151;">A/C <t t-esc="doc.partner_id.name"/></div>
-                    <div t-if="is_public and doc.dgt_bid_ref" style="color:#374151;">Ref.: <t t-esc="doc.dgt_bid_ref"/></div>
-                    <div t-if="doc.client_order_ref and not is_public" style="color:#374151;">Sua referência: <t t-esc="doc.client_order_ref"/></div>
+                <td style="vertical-align:top; width:70%; padding-right:12px;">
+                    <div style="font-size:10px; color:#6b7280; text-transform:uppercase; letter-spacing:.6px; margin-bottom:4px;">Destinatário</div>
+                    <div style="border:1px solid #dfe2e5; border-radius:8px;">
+                        <table style="width:100%; border-collapse:collapse; font-size:10px;">
+                            <tr>
+                                <td style="width:50%; vertical-align:top; padding:8px 10px;">
+                                    <div style="font-size:13px; font-weight:700; color:#2c3e50;"><t t-esc="cp.legal_name or cp.name"/></div>
+                                    <div t-if="cp.legal_name and cp.legal_name != cp.name" style="color:#6b7280; font-size:9px; margin-top:1px;">Nome fantasia: <t t-esc="cp.name"/></div>
+                                    <div t-if="cp.cnpj_cpf or cp.inscr_est" style="margin-top:5px; color:#374151;">
+                                        <t t-if="cp.cnpj_cpf">CNPJ/CPF <t t-esc="cp.cnpj_cpf"/></t><t t-if="cp.cnpj_cpf and cp.inscr_est"> · </t><t t-if="cp.inscr_est">IE <t t-esc="cp.inscr_est"/></t>
+                                    </div>
+                                    <div t-if="cp.street or cp.city_id or cp.city" style="margin-top:5px;">
+                                        <div style="font-size:8.5px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px;">Endereço</div>
+                                        <div style="color:#374151;">
+                                            <t t-if="cp.street">
+                                                <t t-esc="cp.street"/><t t-if="cp.number">, <t t-esc="cp.number"/></t><t t-if="cp.street2"> - <t t-esc="cp.street2"/></t><br/>
+                                            </t>
+                                            <t t-if="cp.district"><t t-esc="cp.district"/><br/></t>
+                                            <t t-if="cp.city_id or cp.city or cp.state_id">
+                                                <t t-esc="cp.city_id.name or cp.city or ''"/><t t-if="cp.state_id"> / <t t-esc="cp.state_id.code"/></t><t t-if="cp.zip"> · CEP <t t-esc="cp.zip"/></t>
+                                            </t>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="width:50%; vertical-align:top; padding:8px 10px; border-left:1px solid #eef0f2;">
+                                    <div t-if="cp.phone or cp.mobile">
+                                        <div style="font-size:8.5px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px;">Telefone</div>
+                                        <div style="color:#374151;"><t t-esc="cp.phone or cp.mobile"/><t t-if="cp.phone and cp.mobile"> / <t t-esc="cp.mobile"/></t></div>
+                                    </div>
+                                    <div t-if="cp.email" style="margin-top:5px;">
+                                        <div style="font-size:8.5px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px;">E-mail</div>
+                                        <div style="color:#374151;"><t t-esc="cp.email"/></div>
+                                    </div>
+                                    <div t-if="contact" style="margin-top:5px;">
+                                        <div style="font-size:8.5px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px;">Contato (A/C)</div>
+                                        <div style="color:#374151;">
+                                            <t t-esc="contact.name"/>
+                                            <t t-if="contact.phone or contact.mobile"><br/><t t-esc="contact.phone or contact.mobile"/></t>
+                                            <t t-if="contact.email"><br/><t t-esc="contact.email"/></t>
+                                        </div>
+                                    </div>
+                                    <div t-if="is_public and doc.dgt_bid_ref" style="margin-top:5px;">
+                                        <div style="font-size:8.5px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px;">Ref.</div>
+                                        <div style="color:#374151;"><t t-esc="doc.dgt_bid_ref"/></div>
+                                    </div>
+                                    <div t-if="doc.client_order_ref and not is_public" style="margin-top:5px;">
+                                        <div style="font-size:8.5px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px;">Sua referência</div>
+                                        <div style="color:#374151;"><t t-esc="doc.client_order_ref"/></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </td>
-                <td style="vertical-align:top; text-align:right; color:#6b7280;">
+                <td style="vertical-align:top; width:30%; text-align:right; color:#6b7280;">
                     <t t-esc="company.partner_id.city_id.name or company.city or ''"/>,
                     <span t-field="doc.date_order" t-options='{"widget": "date"}'/>
                 </td>
