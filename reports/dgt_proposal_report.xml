@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="paperformat_dgt_proposal" model="report.paperformat">
+        <field name="name">Proposta Comercial A4</field>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">28</field>
+        <field name="margin_bottom">18</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">22</field>
+        <field name="dpi">90</field>
+    </record>
+
     <report
         id="action_dgt_proposal_report"
         string="Proposta Comercial"
@@ -8,5 +21,6 @@
         file="dgt_sale.dgt_proposal_report"
         name="dgt_sale.dgt_proposal_report"
         print_report_name="'Proposta - %s' % (object.name)"
+        paperformat="paperformat_dgt_proposal"
     />
 </odoo>

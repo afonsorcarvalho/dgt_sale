@@ -8,7 +8,7 @@
         <t t-foreach="specs" t-as="spec">
             <t t-if="spec.group and spec.group != prev_group">
                 <tr>
-                    <td colspan="2" style="background:#2c3e50; color:#ffffff; padding:3px 6px; font-size:8.5px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;">
+                    <td colspan="2" style="color:#2c3e50; font-weight:700; font-size:8.5px; text-transform:uppercase; letter-spacing:.5px; border-bottom:1.5px solid #2c3e50; padding:3px 6px; background:#ffffff;">
                         <t t-esc="spec.group"/>
                     </td>
                 </tr>
@@ -28,7 +28,7 @@
     <t t-set="p" t-value="line.product_id"/>
     <t t-set="specs" t-value="p.dgt_spec_ids"/>
     <t t-set="half" t-value="(len(specs) + 1) // 2"/>
-    <div style="page-break-inside:avoid; border:1px solid #dfe2e5; padding:14px; margin-bottom:14px;">
+    <div style="page-break-inside:avoid; border:1px solid #dfe2e5; border-radius:8px; padding:14px; margin-bottom:14px;">
         <table style="width:100%; border-collapse:collapse;">
             <tr>
                 <td t-if="p.image" style="width:40%; vertical-align:top; padding-right:14px; text-align:center;">
@@ -43,27 +43,29 @@
                     <div t-if="p.dgt_clinical_description" style="line-height:1.5; color:#374151; margin-bottom:8px;" t-raw="p.dgt_clinical_description"/>
                     <div t-if="not p.dgt_clinical_description and line.name" style="line-height:1.5; color:#374151; margin-bottom:8px; white-space:pre-line;"><t t-esc="line.name"/></div>
                     <div style="margin-bottom:6px;">
-                        <span t-if="p.dgt_anvisa_reg" style="display:inline-block; border:1px solid #9fd3b0; background:#e8f5ec; color:#1d6b3a; font-weight:700; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px;">✔ Anvisa <t t-esc="p.dgt_anvisa_reg"/></span>
-                        <span t-if="p.dgt_risk_class" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px;">Classe <t t-esc="p.dgt_risk_class"/></span>
-                        <span t-if="p.dgt_warranty_months" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px;">Garantia <t t-esc="p.dgt_warranty_months"/> meses</span>
-                        <span t-if="p.dgt_origin_country_id" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px;">Origem <t t-esc="p.dgt_origin_country_id.name"/></span>
+                        <span t-if="p.dgt_anvisa_reg" style="display:inline-block; border:1px solid #9fd3b0; background:#e8f5ec; color:#1d6b3a; font-weight:700; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px; border-radius:10px;">✔ Anvisa <t t-esc="p.dgt_anvisa_reg"/></span>
+                        <span t-if="p.dgt_risk_class" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px; border-radius:10px;">Classe <t t-esc="p.dgt_risk_class"/></span>
+                        <span t-if="p.dgt_warranty_months" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px; border-radius:10px;">Garantia <t t-esc="p.dgt_warranty_months"/> meses</span>
+                        <span t-if="p.dgt_origin_country_id" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:1px 8px; margin:0 4px 4px 0; font-size:9.5px; border-radius:10px;">Origem <t t-esc="p.dgt_origin_country_id.name"/></span>
                     </div>
                     <table style="width:100%; border-collapse:collapse; font-size:10px; color:#374151; margin-bottom:8px;">
                         <tr t-if="p.dgt_model"><td style="color:#6b7280; padding:1px 0; width:35%;">Modelo</td><td style="font-weight:600;"><t t-esc="p.dgt_model"/></td></tr>
                         <tr t-if="p.dgt_manufacturer"><td style="color:#6b7280; padding:1px 0;">Fabricante</td><td style="font-weight:600;"><t t-esc="p.dgt_manufacturer"/></td></tr>
                     </table>
-                    <table style="width:100%; border-collapse:collapse; background:#2c3e50; color:#ffffff;">
-                        <tr>
-                            <td style="padding:7px 10px; font-size:10px;">
-                                <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 0}'/> <t t-esc="line.product_uom.name"/> ×
-                                <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": currency}'/>
-                                <t t-if="line.discount"> (desc. <t t-esc="'%g' % line.discount"/>%)</t>
-                            </td>
-                            <td style="padding:7px 10px; text-align:right; font-size:14px; font-weight:800; white-space:nowrap;">
-                                <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": currency}'/>
-                            </td>
-                        </tr>
-                    </table>
+                    <div style="border:1.5px solid #2c3e50; border-radius:6px;">
+                        <table style="width:100%; border-collapse:collapse; color:#2c3e50;">
+                            <tr>
+                                <td style="padding:7px 10px; font-size:10px;">
+                                    <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 0}'/> <t t-esc="line.product_uom.name"/> ×
+                                    <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                    <t t-if="line.discount"> (desc. <t t-esc="'%g' % line.discount"/>%)</t>
+                                </td>
+                                <td style="padding:7px 10px; text-align:right; font-size:14px; font-weight:800; white-space:nowrap;">
+                                    <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -86,7 +88,7 @@
 
 <template id="dgt_proposal_sheet_accessory">
     <t t-set="p" t-value="line.product_id"/>
-    <div style="page-break-inside:avoid; border:1px solid #eef0f2; border-left:4px solid #e8730c; padding:8px 10px; margin-bottom:8px;">
+    <div style="page-break-inside:avoid; border:1px solid #eef0f2; border-left:4px solid #e8730c; border-radius:6px; padding:8px 10px; margin-bottom:8px;">
         <table style="width:100%; border-collapse:collapse;">
             <tr>
                 <td t-if="p.image" style="width:70px; vertical-align:top; padding-right:10px;">
@@ -98,8 +100,8 @@
                         <t t-esc="p.dgt_brand or ''"/><t t-if="p.dgt_model"> · <t t-esc="p.dgt_model"/></t><t t-if="p.dgt_manufacturer"> · <t t-esc="p.dgt_manufacturer"/></t><t t-if="p.dgt_origin_country_id"> · <t t-esc="p.dgt_origin_country_id.name"/></t>
                     </div>
                     <div style="margin-top:3px;">
-                        <span t-if="p.dgt_anvisa_reg" style="display:inline-block; border:1px solid #9fd3b0; background:#e8f5ec; color:#1d6b3a; font-weight:700; padding:0 7px; margin-right:4px; font-size:9px;">Anvisa <t t-esc="p.dgt_anvisa_reg"/></span>
-                        <span t-if="p.dgt_warranty_months" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:0 7px; margin-right:4px; font-size:9px;">Garantia <t t-esc="p.dgt_warranty_months"/>m</span>
+                        <span t-if="p.dgt_anvisa_reg" style="display:inline-block; border:1px solid #9fd3b0; background:#e8f5ec; color:#1d6b3a; font-weight:700; padding:0 7px; margin-right:4px; font-size:9px; border-radius:10px;">Anvisa <t t-esc="p.dgt_anvisa_reg"/></span>
+                        <span t-if="p.dgt_warranty_months" style="display:inline-block; border:1px solid #dfe2e5; background:#f7f8f9; padding:0 7px; margin-right:4px; font-size:9px; border-radius:10px;">Garantia <t t-esc="p.dgt_warranty_months"/>m</span>
                     </div>
                     <div t-if="line.name and line.name != p.display_name" style="color:#374151; font-size:10px; margin-top:3px; white-space:pre-line;"><t t-esc="line.name"/></div>
                     <div t-if="p.dgt_spec_ids" style="color:#374151; font-size:9.5px; margin-top:3px;">
@@ -120,8 +122,8 @@
 
 <template id="dgt_proposal_sheets">
     <div style="font-family:Helvetica,Arial,sans-serif; color:#2c3e50; font-size:11px;">
-        <div style="background:#2c3e50; color:#ffffff; padding:6px 12px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-bottom:12px;">
-            Especificações técnicas
+        <div style="margin-bottom:12px;">
+            <t t-call="dgt_sale.dgt_proposal_block_title"><t t-set="title" t-value="'Especificações técnicas'"/></t>
         </div>
         <t t-set="item_no" t-value="0"/>
         <t t-foreach="doc.order_line" t-as="line">

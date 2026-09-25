@@ -43,6 +43,7 @@
         'reports/dgt_sale_report_template.xml',
         'reports/dgt_proposal_report.xml',
         'reports/proposal/layout.xml',
+        'reports/proposal/components.xml',
         'reports/proposal/cover.xml',
         'reports/proposal/letter_summary.xml',
         'reports/proposal/sheets.xml',
