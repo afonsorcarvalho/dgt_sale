@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<template id="dgt_proposal_block_title">
+    <div style="background:#2c3e50; color:#ffffff; padding:6px 12px; font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; margin:16px 0 0;">
+        <t t-esc="title"/>
+    </div>
+</template>
+
+<template id="dgt_proposal_conditions">
+    <div style="page-break-inside:avoid; font-family:Helvetica,Arial,sans-serif; color:#2c3e50; font-size:11px;">
+        <t t-call="dgt_sale.dgt_proposal_block_title"><t t-set="title" t-value="'Condições comerciais'"/></t>
+        <table style="width:100%; border-collapse:collapse; border:1px solid #dfe2e5;">
+            <tr t-if="doc.payment_term_id">
+                <td style="padding:6px 10px; color:#6b7280; width:32%; border-bottom:1px solid #eef0f2;">Pagamento</td>
+                <td style="padding:6px 10px; font-weight:600; border-bottom:1px solid #eef0f2;"><t t-esc="doc.payment_term_id.name"/></td>
+            </tr>
+            <tr t-if="doc.dgt_delivery_days">
+                <td style="padding:6px 10px; color:#6b7280; border-bottom:1px solid #eef0f2;">Prazo de entrega</td>
+                <td style="padding:6px 10px; font-weight:600; border-bottom:1px solid #eef0f2;">Até <t t-esc="doc.dgt_delivery_days"/> dias após o pedido<t t-if="is_public">/empenho</t></td>
+            </tr>
+            <tr t-if="doc.dgt_freight">
+                <td style="padding:6px 10px; color:#6b7280; border-bottom:1px solid #eef0f2;">Frete</td>
+                <td style="padding:6px 10px; font-weight:600; border-bottom:1px solid #eef0f2;"><span t-field="doc.dgt_freight"/></td>
+            </tr>
+            <tr>
+                <td style="padding:6px 10px; color:#6b7280; border-bottom:1px solid #eef0f2;">Instalação</td>
+                <td style="padding:6px 10px; font-weight:600; border-bottom:1px solid #eef0f2;">
+                    <t t-if="doc.dgt_installation">Inclusa<t t-if="doc.dgt_installation_note"> — <t t-esc="doc.dgt_installation_note"/></t></t>
+                    <t t-else="">Não inclusa</t>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:6px 10px; color:#6b7280; border-bottom:1px solid #eef0f2;">Treinamento</td>
+                <td style="padding:6px 10px; font-weight:600; border-bottom:1px solid #eef0f2;">
+                    <t t-if="doc.dgt_training">Incluso<t t-if="doc.dgt_training_note"> — <t t-esc="doc.dgt_training_note"/></t></t>
+                    <t t-else="">Não incluso</t>
+                </td>
+            </tr>
+            <tr t-if="doc.dgt_max_warranty_months">
+                <td style="padding:6px 10px; color:#6b7280; border-bottom:1px solid #eef0f2;">Garantia</td>
+                <td style="padding:6px 10px; font-weight:600; border-bottom:1px solid #eef0f2;">Conforme ficha de cada item (até <t t-esc="doc.dgt_max_warranty_months"/> meses), contra defeitos de fabricação</td>
+            </tr>
+            <tr t-if="is_quote">
+                <td style="padding:6px 10px; color:#6b7280;">Validade da proposta</td>
+                <td style="padding:6px 10px; font-weight:600;">
+                    <t t-if="doc.validity_date"><span t-field="doc.validity_date" t-options='{"widget": "date"}'/></t>
+                    <t t-else=""><t t-if="is_public">60 dias</t><t t-else="">30 dias</t></t>
+                </td>
+            </tr>
+        </table>
+        <t t-if="doc.note or doc.payment_term_id.note or (doc.fiscal_position_id and doc.fiscal_position_id.sudo().note)">
+            <div style="margin-top:8px; padding:8px 10px; background:#f9fafb; border:1px solid #eef0f2; font-size:10px; color:#374151; line-height:1.5;">
+                <div style="font-weight:700; text-transform:uppercase; font-size:9px; letter-spacing:.5px; color:#6b7280; margin-bottom:3px;">Observações</div>
+                <div t-if="doc.note" t-field="doc.note"/>
+                <div t-if="doc.payment_term_id.note" t-field="doc.payment_term_id.note"/>
+                <div t-if="doc.fiscal_position_id and doc.fiscal_position_id.sudo().note" t-esc="doc.fiscal_position_id.sudo().note"/>
+            </div>
+        </t>
+    </div>
+</template>
+
+<template id="dgt_proposal_services">
+    <div style="page-break-inside:avoid; font-family:Helvetica,Arial,sans-serif; color:#2c3e50; font-size:11px;">
+        <t t-call="dgt_sale.dgt_proposal_block_title"><t t-set="title" t-value="'Serviços e pós-venda'"/></t>
+        <table style="width:100%; border-collapse:collapse; border:1px solid #dfe2e5;">
+            <tr>
+                <td t-if="not is_public and company.dgt_proposal_differentials" style="vertical-align:top; padding:10px 12px; width:50%; color:#374151; line-height:1.5;">
+                    <div style="font-weight:700; color:#e8730c; font-size:9px; letter-spacing:1px;">POR QUE A DIAGNÓSTICA</div>
+                    <div t-raw="company.dgt_proposal_differentials"/>
+                </td>
+                <td t-if="doc.dgt_offer_preventive" style="vertical-align:top; padding:10px 12px; background:#f5f6f7; border-left:4px solid #e8730c;">
+                    <div style="font-weight:700; color:#e8730c; font-size:9px; letter-spacing:1px;">OPCIONAL · CONTRATO DE MANUTENÇÃO PREVENTIVA</div>
+                    <div style="font-size:18px; font-weight:800; margin:4px 0;">
+                        <span t-field="doc.dgt_preventive_value" t-options='{"widget": "monetary", "display_currency": currency}'/>
+                        <span style="font-size:11px; font-weight:600; color:#6b7280;">/ <span t-field="doc.dgt_preventive_periodicity"/></span>
+                    </div>
+                    <div t-if="doc.dgt_preventive_note" style="color:#374151; line-height:1.5; white-space:pre-line;"><t t-esc="doc.dgt_preventive_note"/></div>
+                    <div style="font-size:9px; color:#6b7280; margin-top:4px;">Valor não incluso no total da proposta. Contratação opcional.</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</template>
+
+<template id="dgt_proposal_public_declarations">
+    <div style="page-break-inside:avoid; font-family:Helvetica,Arial,sans-serif; color:#2c3e50; font-size:11px;">
+        <t t-call="dgt_sale.dgt_proposal_block_title"><t t-set="title" t-value="'Declarações e dados da proponente'"/></t>
+        <table style="width:100%; border-collapse:collapse; border:1px solid #dfe2e5;">
+            <tr>
+                <td style="vertical-align:top; padding:10px 12px; width:58%; color:#374151; line-height:1.5; font-size:10.5px;">
+                    <div t-raw="company.dgt_public_declarations"/>
+                </td>
+                <td style="vertical-align:top; padding:10px 12px; background:#f5f6f7; font-size:10.5px; line-height:1.6;">
+                    <div style="font-weight:700;"><t t-esc="company.partner_id.legal_name or company.name"/></div>
+                    <div t-if="company.partner_id.cnpj_cpf">CNPJ <t t-esc="company.partner_id.cnpj_cpf"/></div>
+                    <div t-if="company.partner_id.inscr_est">IE <t t-esc="company.partner_id.inscr_est"/></div>
+                    <div t-if="company.dgt_afe_anvisa">AFE Anvisa <t t-esc="company.dgt_afe_anvisa"/></div>
+                    <div t-if="company.dgt_bank_info" style="margin-top:6px; padding-top:6px; border-top:1px solid #dfe2e5; white-space:pre-line;">
+                        <span style="font-size:9px; color:#6b7280; text-transform:uppercase; letter-spacing:.5px; font-weight:700;">Dados bancários</span>
+                        <t t-esc="company.dgt_bank_info"/>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</template>
+
+<template id="dgt_proposal_acceptance">
+    <div style="page-break-inside:avoid; font-family:Helvetica,Arial,sans-serif; color:#2c3e50;">
+        <t t-call="dgt_sale.report_sales_assinatura_template"/>
+        <div t-if="doc.signature" style="margin-top:16px; text-align:right;">
+            <div style="font-weight:600; font-size:11px;">Assinatura eletrônica</div>
+            <img t-att-src="image_data_uri(doc.signature)" style="max-height:4cm; max-width:8cm;"/>
+            <div style="font-size:11px;" t-field="doc.signed_by"/>
+        </div>
+    </div>
+</template>
+
+</odoo>

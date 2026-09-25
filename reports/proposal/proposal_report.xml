@@ -17,6 +17,14 @@
                 <t t-call="dgt_sale.dgt_proposal_letter_summary"/>
                 <div style="page-break-before:always;"/>
                 <t t-call="dgt_sale.dgt_proposal_sheets"/>
+                <t t-call="dgt_sale.dgt_proposal_conditions"/>
+                <t t-if="(not is_public and company.dgt_proposal_differentials) or doc.dgt_offer_preventive">
+                    <t t-call="dgt_sale.dgt_proposal_services"/>
+                </t>
+                <t t-if="is_public">
+                    <t t-call="dgt_sale.dgt_proposal_public_declarations"/>
+                </t>
+                <t t-call="dgt_sale.dgt_proposal_acceptance"/>
             </div>
         </t>
     </t>
