@@ -3,19 +3,20 @@
 <template id="dgt_proposal_layout">
     <t t-if="not o" t-set="o" t-value="doc"/>
     <t t-if="not company" t-set="company" t-value="doc.company_id.sudo()"/>
+    <t t-if="not pal" t-set="pal" t-value="company.dgt_proposal_palette()"/>
 
     <div class="header">
         <div t-att-class="'dgt-hdr' + (' dgt-hide-first' if has_cover else '')" style="font-family:Helvetica,Arial,sans-serif;">
-            <table style="width:100%; border-collapse:collapse; border-bottom:2px solid #2c3e50;">
+            <table t-att-style="'width:100%; border-collapse:collapse; border-bottom:2px solid ' + pal['primary'] + ';'">
                 <tr>
                     <td style="vertical-align:bottom; padding-bottom:6px;">
                         <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height:40px;"/>
                     </td>
                     <td style="vertical-align:bottom; text-align:right; padding-bottom:6px; font-size:11px; color:#6b7280;">
-                        <span style="color:#e8730c; font-weight:700; letter-spacing:1.5px; font-size:10px;">
+                        <span t-att-style="'color:' + pal['accent'] + '; font-weight:700; letter-spacing:1.5px; font-size:10px;'">
                             <t t-if="is_quote">PROPOSTA COMERCIAL</t><t t-else="">PEDIDO DE VENDA</t>
                         </span><br/>
-                        <span style="font-weight:700; color:#2c3e50; font-size:13px;">Nº <t t-esc="doc.name"/></span>
+                        <span t-att-style="'font-weight:700; color:' + pal['primary'] + '; font-size:13px;'">Nº <t t-esc="doc.name"/></span>
                     </td>
                 </tr>
             </table>

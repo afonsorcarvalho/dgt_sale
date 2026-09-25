@@ -4,12 +4,13 @@
     <t t-call="web.html_container">
     <t t-foreach="docs" t-as="doc">
         <t t-set="company" t-value="doc.company_id.sudo()"/>
+        <t t-set="pal" t-value="company.dgt_proposal_palette()"/>
         <t t-set="currency" t-value="doc.pricelist_id.currency_id"/>
         <t t-set="is_quote" t-value="doc.state in ('draft', 'sent')"/>
         <t t-set="is_public" t-value="doc.dgt_customer_type == 'public'"/>
         <t t-set="has_cover" t-value="bool(doc.dgt_include_cover and is_quote)"/>
         <t t-call="dgt_sale.dgt_proposal_layout">
-            <div class="page" style="font-family:Helvetica,Arial,sans-serif; font-size:11px; color:#2c3e50;">
+            <div class="page" t-att-style="'font-family:Helvetica,Arial,sans-serif; font-size:11px; color:' + pal['primary'] + ';'">
                 <t t-if="has_cover">
                     <t t-call="dgt_sale.dgt_proposal_cover"/>
                     <div style="page-break-before:always;"/>

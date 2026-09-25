@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <template id="dgt_proposal_letter_summary">
-    <div style="font-family:Helvetica,Arial,sans-serif; color:#2c3e50; font-size:11px;">
+    <div t-att-style="'font-family:Helvetica,Arial,sans-serif; color:' + pal['primary'] + '; font-size:11px;'">
         <t t-set="cp" t-value="doc.partner_id.commercial_partner_id"/>
         <t t-set="contact" t-value="doc.partner_id if doc.partner_id.parent_id else False"/>
         <table style="width:100%; border-collapse:collapse; margin-bottom:12px;">
@@ -12,7 +12,7 @@
                         <table style="width:100%; border-collapse:collapse; font-size:10px;">
                             <tr>
                                 <td style="width:50%; vertical-align:top; padding:8px 10px;">
-                                    <div style="font-size:13px; font-weight:700; color:#2c3e50;"><t t-esc="cp.legal_name or cp.name"/></div>
+                                    <div t-att-style="'font-size:13px; font-weight:700; color:' + pal['primary'] + ';'"><t t-esc="cp.legal_name or cp.name"/></div>
                                     <div t-if="cp.legal_name and cp.legal_name != cp.name" style="color:#6b7280; font-size:9px; margin-top:1px;">Nome fantasia: <t t-esc="cp.name"/></div>
                                     <div t-if="cp.cnpj_cpf or cp.inscr_est" style="margin-top:5px; color:#374151;">
                                         <t t-if="cp.cnpj_cpf">CNPJ/CPF <t t-esc="cp.cnpj_cpf"/></t><t t-if="cp.cnpj_cpf and cp.inscr_est"> · </t><t t-if="cp.inscr_est">IE <t t-esc="cp.inscr_est"/></t>
@@ -71,7 +71,7 @@
 
         <t t-call="dgt_sale.dgt_proposal_block_title"><t t-set="title" t-value="'Resumo do investimento'"/></t>
         <table style="width:100%; border-collapse:collapse; font-size:10.5px;">
-            <tr style="background:#f5f6f7; color:#6b7280; font-size:9px; text-transform:uppercase; letter-spacing:.5px;">
+            <tr t-att-style="'background:' + pal['primary_tint'] + '; color:#6b7280; font-size:9px; text-transform:uppercase; letter-spacing:.5px;'">
                 <td style="padding:5px 6px; border-bottom:1px solid #dfe2e5; width:28px;">Item</td>
                 <td style="padding:5px 6px; border-bottom:1px solid #dfe2e5;">Descrição</td>
                 <td style="padding:5px 6px; border-bottom:1px solid #dfe2e5;">Marca / Modelo</td>
@@ -83,7 +83,7 @@
             <t t-foreach="doc.order_line" t-as="line">
                 <t t-if="line.display_type == 'line_section'">
                     <tr>
-                        <td colspan="6" style="padding:6px; font-weight:700; color:#2c3e50; border-bottom:1px solid #dfe2e5; background:#fbfbfc; text-transform:uppercase; font-size:9.5px; letter-spacing:.5px;">
+                        <td colspan="6" t-att-style="'padding:6px; font-weight:700; color:' + pal['primary'] + '; border-bottom:1px solid #dfe2e5; background:#fbfbfc; text-transform:uppercase; font-size:9.5px; letter-spacing:.5px;'">
                             <t t-esc="line.name"/>
                         </td>
                     </tr>
@@ -91,7 +91,7 @@
                 <t t-if="not line.display_type">
                     <t t-set="item_no" t-value="item_no + 1"/>
                     <tr>
-                        <td style="padding:5px 6px; border-bottom:1px solid #eef0f2; color:#e8730c; font-weight:700;"><t t-esc="'%02d' % item_no"/></td>
+                        <td t-att-style="'padding:5px 6px; border-bottom:1px solid #eef0f2; color:' + pal['accent'] + '; font-weight:700;'"><t t-esc="'%02d' % item_no"/></td>
                         <td style="padding:5px 6px; border-bottom:1px solid #eef0f2; font-weight:600;"><t t-esc="line.product_id.name or line.name"/></td>
                         <td style="padding:5px 6px; border-bottom:1px solid #eef0f2; color:#374151;">
                             <t t-esc="line.product_id.dgt_brand or '—'"/><t t-if="line.product_id.dgt_model"> / <t t-esc="line.product_id.dgt_model"/></t>
@@ -127,8 +127,8 @@
                             </tr>
                         </t>
                     </table>
-                    <div style="border:1.5px solid #2c3e50; border-radius:6px; margin-top:6px;">
-                        <table style="width:100%; border-collapse:collapse; color:#2c3e50;">
+                    <div t-att-style="'border:1.5px solid ' + pal['primary'] + '; border-radius:6px; margin-top:6px;'">
+                        <table t-att-style="'width:100%; border-collapse:collapse; color:' + pal['primary'] + ';'">
                             <tr>
                                 <td style="padding:8px 10px; font-weight:700; letter-spacing:.5px;">VALOR TOTAL</td>
                                 <td style="padding:8px 10px; text-align:right; font-weight:800; font-size:15px;"><span t-field="doc.amount_total" t-options='{"widget": "monetary", "display_currency": currency}'/></td>
