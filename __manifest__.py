@@ -36,6 +36,7 @@
         'views/sale_order_views.xml',
         'views/res_partner_views.xml',
         'views/res_company_views.xml',
+        'data/company_fix.xml',
         'reports/report_sales_assinatura_template.xml',
         'reports/report_sales_client_template.xml',
         'reports/dgt_sale_report.xml',

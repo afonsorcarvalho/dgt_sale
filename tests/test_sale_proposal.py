@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from odoo.tests.common import TransactionCase, tagged
 
+from odoo.addons.dgt_sale.models.res_company import DEFAULT_DECLARATIONS, NEW_LI, OLD_LI
+
 
 @tagged('post_install', '-at_install')
 class TestSaleProposal(TransactionCase):
@@ -41,3 +43,13 @@ class TestSaleProposal(TransactionCase):
     def test_proposal_menu_action_domain(self):
         action = self.env.ref('dgt_sale.action_dgt_proposals')
         self.assertIn('dgt_is_proposal', action.domain)
+
+    def test_fix_validity_declaration_replaces_old_text(self):
+        company = self.env.ref('base.main_company')
+        company.dgt_public_declarations = '<p>Declaramos que:</p><ul>' + OLD_LI + '</ul>'
+        self.env['res.company']._dgt_fix_validity_declaration()
+        self.assertNotIn('60 (sessenta)', company.dgt_public_declarations)
+        self.assertIn(NEW_LI, company.dgt_public_declarations)
+
+    def test_default_declarations_no_fixed_validity(self):
+        self.assertNotIn('60 (sessenta)', DEFAULT_DECLARATIONS)

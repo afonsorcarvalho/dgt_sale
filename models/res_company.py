@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import fields, models
+from odoo import api, fields, models
 
 DEFAULT_LETTER = (
     '<p>Prezados,</p>'
@@ -17,13 +17,16 @@ DEFAULT_DIFFERENTIALS = (
     '<li>Instalação e treinamento operacional da equipe</li>'
     '</ul>'
 )
+OLD_LI = '<li>A presente proposta tem validade de 60 (sessenta) dias a contar da data de sua emissão.</li>'
+NEW_LI = '<li>A presente proposta tem a validade indicada nas condições comerciais.</li>'
+
 DEFAULT_DECLARATIONS = (
     '<p>Declaramos que:</p>'
     '<ul>'
     '<li>Nos preços propostos estão inclusos todos os impostos, taxas, fretes, seguros e demais encargos '
     'incidentes sobre o fornecimento.</li>'
     '<li>Os produtos ofertados possuem registro vigente na Anvisa, conforme indicado em cada ficha técnica.</li>'
-    '<li>A presente proposta tem validade de 60 (sessenta) dias a contar da data de sua emissão.</li>'
+    + NEW_LI +
     '<li>Cumprimos plenamente os requisitos de habilitação exigidos no edital.</li>'
     '</ul>'
 )
@@ -37,3 +40,14 @@ class ResCompany(models.Model):
     dgt_afe_anvisa = fields.Char(string='AFE Anvisa')
     dgt_bank_info = fields.Text(string='Dados bancários')
     dgt_public_declarations = fields.Html(string='Declarações (cliente público)', default=DEFAULT_DECLARATIONS)
+
+    @api.model
+    def _dgt_fix_validity_declaration(self):
+        """Replace the old fixed-validity sentence with one that defers to the
+        commercial conditions block, in existing company rows that still hold
+        the pre-fix default text. Leaves any other user edits intact."""
+        companies = self.search([])
+        for company in companies:
+            text = company.dgt_public_declarations or ''
+            if OLD_LI in text:
+                company.dgt_public_declarations = text.replace(OLD_LI, NEW_LI)
