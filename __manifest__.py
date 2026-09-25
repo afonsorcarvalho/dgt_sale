@@ -29,6 +29,9 @@
 
     # always loaded
     'data': [
+        'security/dgt_sale_security.xml',
+        'security/ir.model.access.csv',
+        'views/product_views.xml',
         'reports/report_sales_assinatura_template.xml',
         'reports/report_sales_client_template.xml',
         'reports/dgt_sale_report.xml',

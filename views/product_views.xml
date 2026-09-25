@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_view_dgt_sheet" model="ir.ui.view">
+        <field name="name">product.template.form.dgt.sheet</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="after">
+                <page string="Ficha Técnica" name="dgt_sheet" groups="dgt_sale.group_product_sheet_editor">
+                    <group>
+                        <group string="Identificação">
+                            <field name="dgt_brand"/>
+                            <field name="dgt_model"/>
+                            <field name="dgt_manufacturer"/>
+                            <field name="dgt_origin_country_id" options="{'no_create': True}"/>
+                        </group>
+                        <group string="Regulatório e garantia">
+                            <field name="dgt_anvisa_reg"/>
+                            <field name="dgt_risk_class"/>
+                            <field name="dgt_warranty_months"/>
+                            <field name="dgt_sheet_type"/>
+                            <field name="dgt_sheet_type_effective"/>
+                        </group>
+                    </group>
+                    <label for="dgt_clinical_description"/>
+                    <field name="dgt_clinical_description"/>
+                    <label for="dgt_spec_ids"/>
+                    <field name="dgt_spec_ids">
+                        <tree editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="group"/>
+                            <field name="name"/>
+                            <field name="value"/>
+                        </tree>
+                    </field>
+                    <label for="dgt_included_items"/>
+                    <field name="dgt_included_items"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

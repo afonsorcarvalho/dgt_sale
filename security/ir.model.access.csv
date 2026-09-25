@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_dgt_product_spec_user,dgt.product.spec user,model_dgt_product_spec,base.group_user,1,0,0,0
+access_dgt_product_spec_editor,dgt.product.spec editor,model_dgt_product_spec,dgt_sale.group_product_sheet_editor,1,1,1,1
+access_dgt_product_spec_manager,dgt.product.spec manager,model_dgt_product_spec,sales_team.group_sale_manager,1,1,1,1
