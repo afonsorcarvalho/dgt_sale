@@ -1,5 +1,12 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+import re
+
+from odoo import _, api, fields, models
+from odoo.exceptions import ValidationError
+
+COLOR_RE = re.compile(r'^#[0-9A-Fa-f]{6}$')
+DEFAULT_COLOR_PRIMARY = '#2E3A8C'
+DEFAULT_COLOR_ACCENT = '#F0851E'
 
 DEFAULT_LETTER = (
     '<p>Prezados,</p>'
@@ -32,14 +39,54 @@ DEFAULT_DECLARATIONS = (
 )
 
 
+def _mix_with_white(hex_color, ratio):
+    hex_color = hex_color.lstrip('#')
+    red = int(hex_color[0:2], 16)
+    green = int(hex_color[2:4], 16)
+    blue = int(hex_color[4:6], 16)
+    red = round(red + (255 - red) * ratio)
+    green = round(green + (255 - green) * ratio)
+    blue = round(blue + (255 - blue) * ratio)
+    return '#%02X%02X%02X' % (red, green, blue)
+
+
 class ResCompany(models.Model):
     _inherit = 'res.company'
 
+    dgt_color_primary = fields.Char(string='Cor principal', default=DEFAULT_COLOR_PRIMARY)
+    dgt_color_accent = fields.Char(string='Cor de destaque', default=DEFAULT_COLOR_ACCENT)
+    dgt_short_name = fields.Char(string='Nome curto (proposta)')
     dgt_proposal_letter = fields.Html(string='Carta de apresentação', default=DEFAULT_LETTER)
     dgt_proposal_differentials = fields.Html(string='Diferenciais', default=DEFAULT_DIFFERENTIALS)
     dgt_afe_anvisa = fields.Char(string='AFE Anvisa')
     dgt_bank_info = fields.Text(string='Dados bancários')
     dgt_public_declarations = fields.Html(string='Declarações (cliente público)', default=DEFAULT_DECLARATIONS)
+
+    @api.constrains('dgt_color_primary', 'dgt_color_accent')
+    def _check_dgt_colors(self):
+        for company in self:
+            for fname in ('dgt_color_primary', 'dgt_color_accent'):
+                value = company[fname]
+                if value and not COLOR_RE.match(value):
+                    raise ValidationError(
+                        _('%s deve ser uma cor hexadecimal no formato #RRGGBB.') % company._fields[fname].string
+                    )
+
+    def dgt_proposal_palette(self):
+        self.ensure_one()
+        primary = self.dgt_color_primary
+        if not primary or not COLOR_RE.match(primary):
+            primary = DEFAULT_COLOR_PRIMARY
+        accent = self.dgt_color_accent
+        if not accent or not COLOR_RE.match(accent):
+            accent = DEFAULT_COLOR_ACCENT
+        return {
+            'primary': primary.upper(),
+            'accent': accent.upper(),
+            'primary_tint': _mix_with_white(primary, 0.94),
+            'primary_soft': _mix_with_white(primary, 0.85),
+            'accent_tint': _mix_with_white(accent, 0.90),
+        }
 
     @api.model
     def _dgt_fix_validity_declaration(self):

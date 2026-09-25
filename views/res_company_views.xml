@@ -8,6 +8,13 @@
             <xpath expr="//notebook" position="inside">
                 <page string="Proposta Comercial" name="dgt_proposal">
                     <group>
+                        <group string="Identidade visual">
+                            <field name="dgt_color_primary" placeholder="#RRGGBB"/>
+                            <field name="dgt_color_accent" placeholder="#RRGGBB"/>
+                            <field name="dgt_short_name" placeholder="Nome curto usado na proposta"/>
+                        </group>
+                    </group>
+                    <group>
                         <field name="dgt_afe_anvisa"/>
                         <field name="dgt_bank_info"/>
                     </group>
