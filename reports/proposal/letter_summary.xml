@@ -49,7 +49,7 @@
                             <t t-esc="line.product_id.dgt_brand or '—'"/><t t-if="line.product_id.dgt_model"> / <t t-esc="line.product_id.dgt_model"/></t>
                         </td>
                         <td style="padding:5px 6px; border-bottom:1px solid #eef0f2; text-align:right; white-space:nowrap;">
-                            <span t-field="line.product_uom_qty" t-options='{"widget": "float", "precision": 0}'/> <t t-esc="line.product_uom.name"/>
+                            <t t-esc="('%g' % line.product_uom_qty).replace('.', ',')"/> <t t-esc="line.product_uom.name"/>
                         </td>
                         <td style="padding:5px 6px; border-bottom:1px solid #eef0f2; text-align:right; white-space:nowrap;">
                             <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": currency}'/>

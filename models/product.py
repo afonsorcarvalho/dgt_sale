@@ -3,11 +3,23 @@ from odoo import _, api, fields, models
 
 RISK_CLASSES = [('I', 'Classe I'), ('II', 'Classe II'), ('III', 'Classe III'), ('IV', 'Classe IV')]
 
-SHEET_PREFIX = 'dgt_'
+SHEET_FIELDS = frozenset([
+    'dgt_brand',
+    'dgt_model',
+    'dgt_manufacturer',
+    'dgt_origin_country_id',
+    'dgt_anvisa_reg',
+    'dgt_risk_class',
+    'dgt_warranty_months',
+    'dgt_clinical_description',
+    'dgt_spec_ids',
+    'dgt_included_items',
+    'dgt_sheet_type',
+])
 
 
 def _is_sheet_only(vals):
-    return bool(vals) and all(key.startswith(SHEET_PREFIX) for key in vals)
+    return bool(vals) and set(vals) <= SHEET_FIELDS
 
 
 class ProductTemplate(models.Model):
@@ -55,6 +67,20 @@ class ProductTemplate(models.Model):
             return res
         return super(ProductTemplate, self).write(vals)
 
+    @api.multi
+    def action_dgt_edit_sheet(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Ficha Técnica'),
+            'res_model': 'product.template',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'views': [(self.env.ref('dgt_sale.product_template_sheet_form').id, 'form')],
+            'target': 'new',
+            'context': {'form_view_initial_mode': 'edit'},
+        }
+
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
@@ -65,3 +91,8 @@ class ProductProduct(models.Model):
                 and not self.check_access_rights('write', raise_exception=False)):
             return self.mapped('product_tmpl_id').write(vals)
         return super(ProductProduct, self).write(vals)
+
+    @api.multi
+    def action_dgt_edit_sheet(self):
+        self.ensure_one()
+        return self.product_tmpl_id.action_dgt_edit_sheet()

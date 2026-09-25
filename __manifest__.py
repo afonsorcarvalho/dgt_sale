@@ -27,6 +27,8 @@
         'sale_management',
     ],
 
+    'external_dependencies': {'python': ['num2words']},
+
     # always loaded
     'data': [
         'security/dgt_sale_security.xml',

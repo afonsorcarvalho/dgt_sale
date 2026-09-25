@@ -6,9 +6,16 @@ num2words(pt_BR, to='currency') separates every thousand group with a comma
 by a space, except the last non-zero group which is joined by " e " when it is
 below 100 or a round hundred.
 """
+import logging
 from decimal import Decimal, ROUND_HALF_UP
 
-from num2words import num2words
+_logger = logging.getLogger(__name__)
+
+try:
+    from num2words import num2words
+except ImportError:
+    num2words = None
+    _logger.warning('num2words is not installed; amount_to_text_ptbr will return an empty string.')
 
 
 def _last_nonzero_group(integer):
@@ -18,6 +25,8 @@ def _last_nonzero_group(integer):
 
 
 def amount_to_text_ptbr(amount):
+    if num2words is None:
+        return ''
     value = Decimal(str(amount)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     integer = int(value)
     text = num2words(value, lang='pt_BR', to='currency')

@@ -3,9 +3,8 @@
     <record id="group_product_sheet_editor" model="res.groups">
         <field name="name">Editar ficha técnica de produtos</field>
         <field name="category_id" ref="base.module_category_sales_management"/>
-        <field name="implied_ids" eval="[(4, ref('sales_team.group_sale_salesman'))]"/>
     </record>
-    <record id="sales_team.group_sale_manager" model="res.groups">
+    <record id="sales_team.group_sale_salesman" model="res.groups">
         <field name="implied_ids" eval="[(4, ref('dgt_sale.group_product_sheet_editor'))]"/>
     </record>
 </odoo>
