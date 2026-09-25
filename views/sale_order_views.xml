@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form_dgt_proposal" model="ir.ui.view">
+        <field name="name">sale.order.form.dgt.proposal</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_print_proposal" type="object" string="Imprimir Proposta"
+                        class="btn-primary" attrs="{'invisible': [('dgt_is_proposal', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//page[@name='other_information']" position="before">
+                <page string="Proposta" name="dgt_proposal">
+                    <group>
+                        <group string="Documento">
+                            <field name="dgt_is_proposal"/>
+                            <field name="dgt_customer_type" widget="radio"/>
+                            <field name="dgt_bid_ref" attrs="{'invisible': [('dgt_customer_type', '!=', 'public')]}"/>
+                            <field name="dgt_include_cover"/>
+                        </group>
+                        <group string="Entrega e serviços">
+                            <field name="dgt_delivery_days"/>
+                            <field name="dgt_freight"/>
+                            <field name="dgt_installation"/>
+                            <field name="dgt_installation_note" attrs="{'invisible': [('dgt_installation', '=', False)]}"/>
+                            <field name="dgt_training"/>
+                            <field name="dgt_training_note" attrs="{'invisible': [('dgt_training', '=', False)]}"/>
+                        </group>
+                    </group>
+                    <group string="Contrato de manutenção preventiva (opcional)">
+                        <field name="dgt_offer_preventive"/>
+                        <field name="dgt_preventive_value" attrs="{'invisible': [('dgt_offer_preventive', '=', False)], 'required': [('dgt_offer_preventive', '=', True)]}"/>
+                        <field name="dgt_preventive_periodicity" attrs="{'invisible': [('dgt_offer_preventive', '=', False)]}"/>
+                        <field name="dgt_preventive_note" attrs="{'invisible': [('dgt_offer_preventive', '=', False)]}"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_dgt_proposals" model="ir.actions.act_window">
+        <field name="name">Propostas Comerciais</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="domain">[('dgt_is_proposal', '=', True)]</field>
+        <field name="context">{'default_dgt_is_proposal': True}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Crie uma proposta comercial completa</p>
+            <p>Propostas com capa, ficha técnica dos equipamentos e condições comerciais.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_dgt_proposals"
+              name="Propostas Comerciais"
+              action="action_dgt_proposals"
+              parent="sale.sale_order_menu"
+              sequence="2"
+              groups="sales_team.group_sale_salesman"/>
+</odoo>

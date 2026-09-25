@@ -2,3 +2,4 @@
 from . import test_amount_text
 from . import test_product_sheet
 from . import test_product_access
+from . import test_sale_proposal
