@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="dgt_proposal_report">
+    <t t-call="web.html_container">
+    <t t-foreach="docs" t-as="doc">
+        <t t-set="company" t-value="doc.company_id.sudo()"/>
+        <t t-set="currency" t-value="doc.pricelist_id.currency_id"/>
+        <t t-set="is_quote" t-value="doc.state in ('draft', 'sent')"/>
+        <t t-set="is_public" t-value="False"/>
+        <t t-set="has_cover" t-value="bool(doc.dgt_include_cover and is_quote)"/>
+        <t t-call="dgt_sale.dgt_proposal_layout">
+            <div class="page" style="font-family:Helvetica,Arial,sans-serif; font-size:11px; color:#2c3e50;">
+                <t t-if="has_cover">
+                    <t t-call="dgt_sale.dgt_proposal_cover"/>
+                    <div style="page-break-before:always;"/>
+                </t>
+                <div style="font-size:14px;">Conteúdo da proposta <t t-esc="doc.name"/> (placeholder da Task 1, substituído na Task 6).</div>
+            </div>
+        </t>
+    </t>
+    </t>
+</template>
+</odoo>

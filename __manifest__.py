@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 {
     'name': "Sales Report Diagnostica",
-	'version': '1.0',
+	'version': '1.1',
     'sequence': 200,
     'category': 'Sales',
     'summary': 'Novo report de vendas para diagnostica',
@@ -23,20 +23,20 @@
    
     # any module necessary for this one to work correctly
     'depends': [
-      
         'br_sale',
-      
+        'sale_management',
     ],
 
-    # always loaded 
+    # always loaded
     'data': [
         'reports/report_sales_assinatura_template.xml',
         'reports/report_sales_client_template.xml',
-		'reports/dgt_sale_report.xml',
+        'reports/dgt_sale_report.xml',
         'reports/dgt_sale_report_template.xml',
-        
-       
-      
+        'reports/dgt_proposal_report.xml',
+        'reports/proposal/layout.xml',
+        'reports/proposal/cover.xml',
+        'reports/proposal/proposal_report.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

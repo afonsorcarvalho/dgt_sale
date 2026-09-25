@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        id="action_dgt_proposal_report"
+        string="Proposta Comercial"
+        model="sale.order"
+        report_type="qweb-pdf"
+        file="dgt_sale.dgt_proposal_report"
+        name="dgt_sale.dgt_proposal_report"
+        print_report_name="'Proposta - %s' % (object.name)"
+    />
+</odoo>

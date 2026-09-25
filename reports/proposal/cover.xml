@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="dgt_proposal_cover">
+    <div style="padding-top:120px; text-align:center; font-family:Helvetica,Arial,sans-serif; color:#2c3e50;">
+        <div style="color:#e8730c; font-size:12px; font-weight:700; letter-spacing:3px;">PROPOSTA COMERCIAL</div>
+        <div style="font-size:34px; font-weight:800;">Nº <t t-esc="doc.name"/></div>
+    </div>
+</template>
+</odoo>
