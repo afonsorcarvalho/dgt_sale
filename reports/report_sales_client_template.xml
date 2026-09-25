@@ -1,53 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="report_cliente_equipment_template">
-       <table class="table table-sm thead-dark table-condensed table-striped">
-                    <thead>
-                        <th width="50%" class="text-center">Dados do Cliente</th>
-                      <!--   <th class="text-center">Dados do Equipamento</th>-->
-
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="p-1">
-                                <b><span t-field="doc.partner_id.name"/></b> <br/> CNPJ/CPF:<span t-field="doc.partner_id.cnpj_cpf"/><br/>
-                                <span t-field="doc.partner_id.street"/>, <span t-field="doc.partner_id.number"/>, 
-                                <span t-field="doc.partner_id.district"/>
-                                <span t-field="doc.partner_id.street2"/>-<br/> 
-                                <span t-field="doc.partner_id.city_id.name"/>
-                                <span t-field="doc.partner_id.state_id.name"/>-
-                                <span t-field="doc.partner_id.country_id.name"/>-
-                                <span t-field="doc.partner_id.zip"/><br/>
-                                <strong>Contato:</strong><br/>
-                                <span t-field="doc.partner_id.phone"/><br/> 
-                                <span t-field="doc.partner_id.mobile"/><br/>
-                                <span t-field="doc.partner_id.email"/>
-                            </td>
-                         <!--   <td>
-                                <b><span t-field="doc.equipment_id.name"/></b><br/>
-                                <b>Número de Série:</b><span t-field="doc.equipment_id.serial_number"/>
-                                <t t-if="doc.equipment_id.patrimony">
-                                    <b>Patrimônio:</b> <span t-if="doc.equipment_id.patrimony" t-field="doc.equipment_id.patrimony"/>	
-                                </t>
-                                <t t-if="doc.equipment_id.tag">
-                                    <b>TAG:</b> <span t-if="doc.equipment_id.tag" t-field="doc.equipment_id.tag"/>	
-                                </t>
-                                <t t-if="doc.equipment_id.model">
-                                    <b>Modelo:</b> <span t-if="doc.equipment_id.model" t-field="doc.equipment_id.model"/>	
-                                </t>
-                                <t t-if="doc.equipment_id.partner_id.name">
-                                    <b>Marca/Fornecedor:</b> <span t-if="doc.equipment_id.partner_id.name" t-field="doc.equipment_id.partner_id.name"/>	
-                                </t>
-                                <br/>
-                                <t t-if="doc.equipment_location">
-                                    <b>Local: </b><span t-if="doc.equipment_location" t-field="doc.equipment_location"/><br/>	
-                                </t>
-                                <strong>Status:</strong><br/>
-                                <span t-field="doc.equipment_id.situation_id"/>	
-                            </td> -->
-                        </tr>
-                        
-                    </tbody>
-                </table>
+        <div class="dgt-card" style="border:1px solid #dfe2e5; border-radius:4px; overflow:hidden;">
+            <div style="background:#2c3e50; color:#ffffff; padding:6px 12px; font-size:11px; font-weight:600; letter-spacing:.5px; text-transform:uppercase;">
+                Dados do Cliente
+            </div>
+            <div style="padding:10px 12px; font-size:12px; line-height:1.5;">
+                <div style="font-weight:700; font-size:13px; color:#2c3e50;">
+                    <span t-field="doc.partner_id.name"/>
+                </div>
+                <div t-if="doc.partner_id.cnpj_cpf">
+                    <span style="color:#6b7280;">CNPJ/CPF:</span>
+                    <span t-field="doc.partner_id.cnpj_cpf"/>
+                </div>
+                <div>
+                    <span t-field="doc.partner_id.street"/><t t-if="doc.partner_id.number">, <span t-field="doc.partner_id.number"/></t><t t-if="doc.partner_id.district">&#160;-&#160;<span t-field="doc.partner_id.district"/></t>
+                </div>
+                <div>
+                    <span t-field="doc.partner_id.city_id.name"/><t t-if="doc.partner_id.state_id">&#160;-&#160;<span t-field="doc.partner_id.state_id.name"/></t><t t-if="doc.partner_id.zip">&#160;-&#160;CEP <span t-field="doc.partner_id.zip"/></t>
+                </div>
+                <div style="margin-top:4px; color:#374151;">
+                    <t t-if="doc.partner_id.phone"><span t-field="doc.partner_id.phone"/></t><t t-if="doc.partner_id.mobile">&#160;&#160;/&#160;&#160;<span t-field="doc.partner_id.mobile"/></t>
+                </div>
+                <div t-if="doc.partner_id.email" style="color:#374151;">
+                    <span t-field="doc.partner_id.email"/>
+                </div>
+            </div>
+        </div>
     </template>
 </odoo>

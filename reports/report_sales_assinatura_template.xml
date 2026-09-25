@@ -1,25 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<template id="report_sales_assinatura_template">
-		<div class="container p-3 my-3 border">
-			<div class="row  pt-3">
-				<div class="col-6">
-					Assinatura Vendedor
-				</div>
-				<div class="col-6">
-					Data Aceite: _______/_________/__________
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-6">
-					<img width="50%" t-att-src="'data:image/png;base64,%s' % to_text(doc.user_id.digital_signature)" />
-					<br />
-					<span style="margin-left:2rem" t-field="doc.user_id.name" />
-				</div>
-				<div class="col-6">
-					Assinatura Cliente e carimbo
-				</div>
-			</div>
-		</div>
-	</template>
+    <template id="report_sales_assinatura_template">
+        <div style="margin-top:24px;">
+            <table style="width:100%; border-collapse:separate; border-spacing:16px 0;">
+                <tr>
+                    <td style="width:50%; vertical-align:bottom; text-align:center; padding-top:24px;">
+                        <img t-if="doc.user_id.digital_signature" style="max-height:52px; margin-bottom:2px;" t-att-src="'data:image/png;base64,%s' % to_text(doc.user_id.digital_signature)"/>
+                        <div style="border-top:1px solid #2c3e50; padding-top:4px; font-size:12px;">
+                            <span style="font-weight:600;" t-field="doc.user_id.name"/><br/>
+                            <span style="color:#6b7280; font-size:11px;">Assinatura do Vendedor</span>
+                        </div>
+                    </td>
+                    <td style="width:50%; vertical-align:bottom; text-align:center; padding-top:24px;">
+                        <div style="border-top:1px solid #2c3e50; padding-top:4px; font-size:12px;">
+                            <span style="color:#6b7280; font-size:11px;">Assinatura do Cliente e Carimbo</span><br/>
+                            <span style="color:#6b7280; font-size:11px;">Data de aceite:&#160;&#160;____ / ____ / ________</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </template>
 </odoo>
