@@ -24,8 +24,16 @@
                                                 <t t-esc="cp.street"/><t t-if="cp.number">, <t t-esc="cp.number"/></t><t t-if="cp.street2"> - <t t-esc="cp.street2"/></t><br/>
                                             </t>
                                             <t t-if="cp.district"><t t-esc="cp.district"/><br/></t>
-                                            <t t-if="cp.city_id or cp.city or cp.state_id">
-                                                <t t-esc="cp.city_id.name or cp.city or ''"/><t t-if="cp.state_id"> / <t t-esc="cp.state_id.code"/></t><t t-if="cp.zip"> · CEP <t t-esc="cp.zip"/></t>
+                                            <t t-if="cp.city_id or cp.city or cp.state_id or cp.zip">
+                                                <t t-set="addr_city" t-value="cp.city_id.name or cp.city or ''"/>
+                                                <t t-set="addr_has_prefix" t-value="bool(addr_city or cp.state_id)"/>
+                                                <t t-if="addr_city"><t t-esc="addr_city"/></t>
+                                                <t t-if="addr_city and cp.state_id"> / <t t-esc="cp.state_id.code"/></t>
+                                                <t t-if="not addr_city and cp.state_id"><t t-esc="cp.state_id.code"/></t>
+                                                <t t-if="cp.zip">
+                                                    <t t-if="addr_has_prefix"> · CEP <t t-esc="cp.zip"/></t>
+                                                    <t t-if="not addr_has_prefix">CEP <t t-esc="cp.zip"/></t>
+                                                </t>
                                             </t>
                                         </div>
                                     </div>
@@ -61,7 +69,8 @@
                     </div>
                 </td>
                 <td style="vertical-align:top; width:30%; text-align:right; color:#6b7280;">
-                    <t t-esc="company.partner_id.city_id.name or company.city or ''"/>,
+                    <t t-set="dgt_company_city" t-value="company.partner_id.city_id.name or company.city or ''"/>
+                    <t t-if="dgt_company_city"><t t-esc="dgt_company_city"/>, </t>
                     <span t-field="doc.date_order" t-options='{"widget": "date"}'/>
                 </td>
             </tr>
