@@ -28,7 +28,8 @@
             </div>
         </div>
 
-        <table style="width:100%; border-collapse:collapse; border-top:1px solid #dfe2e5; margin-top:220px;">
+        <t t-set="cover_diff" t-value="bool(not is_public and company.dgt_proposal_differentials)"/>
+        <table t-attf-style="width:100%; border-collapse:collapse; border-top:1px solid #dfe2e5; margin-top:#{200 if cover_diff else 300}px;">
             <tr>
                 <td style="padding-top:10px; width:33%;">
                     <div style="font-size:9px; color:#6b7280; text-transform:uppercase; letter-spacing:.6px;">Emissão</div>
@@ -49,7 +50,7 @@
             </tr>
         </table>
 
-        <div t-if="not is_public and company.dgt_proposal_differentials"
+        <div t-if="cover_diff"
              style="margin-top:18px; background:#f5f6f7; border-left:4px solid #e8730c; padding:8px 14px; font-size:10px; color:#374151;">
             <div style="font-weight:700; color:#e8730c; letter-spacing:1px; font-size:9px; margin-bottom:2px;">POR QUE A DIAGNÓSTICA</div>
             <div t-raw="company.dgt_proposal_differentials"/>
