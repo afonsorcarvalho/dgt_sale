@@ -111,7 +111,7 @@
                                 <div style="font-size:9px; color:#9aa0a6; margin-top:4px; text-transform:uppercase; letter-spacing:.5px;">Foto meramente ilustrativa</div>
                             </td>
                             <td style="vertical-align:top; padding:12px;">
-                                <div t-if="line.name" style="font-size:12px; line-height:1.55; color:#374151; white-space:pre-line; margin-bottom:10px;"><span t-field="line.name"/></div>
+                                <div t-if="line.name" style="font-size:12px; line-height:1.55; color:#374151; white-space:pre-line; margin-bottom:10px;"><t t-esc="line.name"/></div>
                                 <table style="width:100%; border-collapse:collapse; font-size:12px;">
                                     <tr style="background:#f5f6f7; color:#6b7280; text-transform:uppercase; font-size:10px; letter-spacing:.5px;">
                                         <td style="padding:4px 8px; border:1px solid #eef0f2;">Qtd.</td>
