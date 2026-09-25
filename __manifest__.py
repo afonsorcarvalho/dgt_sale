@@ -44,6 +44,7 @@
         'reports/proposal/layout.xml',
         'reports/proposal/cover.xml',
         'reports/proposal/letter_summary.xml',
+        'reports/proposal/sheets.xml',
         'reports/proposal/proposal_report.xml',
     ],
     # only loaded in demonstration mode
