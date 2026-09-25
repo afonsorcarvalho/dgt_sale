@@ -7,6 +7,9 @@
         <field name="arch" type="xml">
             <xpath expr="//page[@name='sales']" position="after">
                 <page string="Ficha Técnica" name="dgt_sheet" groups="dgt_sale.group_product_sheet_editor">
+                    <div class="oe_right">
+                        <button name="%(dgt_sale.action_dgt_copy_spec_wizard)d" type="action" string="Copiar ficha de…" class="btn-secondary"/>
+                    </div>
                     <group>
                         <group string="Identificação">
                             <field name="dgt_brand"/>

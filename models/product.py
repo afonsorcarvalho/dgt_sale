@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 RISK_CLASSES = [('I', 'Classe I'), ('II', 'Classe II'), ('III', 'Classe III'), ('IV', 'Classe IV')]
+
+SHEET_PREFIX = 'dgt_'
+
+
+def _is_sheet_only(vals):
+    return bool(vals) and all(key.startswith(SHEET_PREFIX) for key in vals)
 
 
 class ProductTemplate(models.Model):
@@ -36,3 +42,26 @@ class ProductTemplate(models.Model):
                 tmpl.dgt_sheet_type_effective = 'equipment'
             else:
                 tmpl.dgt_sheet_type_effective = 'accessory'
+
+    @api.multi
+    def write(self, vals):
+        user = self.env.user
+        if (_is_sheet_only(vals)
+                and not self.check_access_rights('write', raise_exception=False)
+                and user.has_group('dgt_sale.group_product_sheet_editor')):
+            res = super(ProductTemplate, self.sudo()).write(vals)
+            for tmpl in self.sudo():
+                tmpl.message_post(body=_('Ficha técnica atualizada por %s') % user.name)
+            return res
+        return super(ProductTemplate, self).write(vals)
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    @api.multi
+    def write(self, vals):
+        if (_is_sheet_only(vals)
+                and not self.check_access_rights('write', raise_exception=False)):
+            return self.mapped('product_tmpl_id').write(vals)
+        return super(ProductProduct, self).write(vals)

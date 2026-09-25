@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="dgt_copy_spec_wizard_form" model="ir.ui.view">
+        <field name="name">dgt.copy.spec.wizard.form</field>
+        <field name="model">dgt.copy.spec.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Copiar ficha técnica">
+                <group>
+                    <field name="target_tmpl_id" readonly="1"/>
+                    <field name="source_tmpl_id" options="{'no_create': True}"/>
+                </group>
+                <p class="text-muted">As especificações do destino serão substituídas. Campos já preenchidos no destino são mantidos.</p>
+                <footer>
+                    <button name="action_copy" type="object" string="Copiar" class="btn-primary"/>
+                    <button string="Cancelar" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_dgt_copy_spec_wizard" model="ir.actions.act_window">
+        <field name="name">Copiar ficha de…</field>
+        <field name="res_model">dgt.copy.spec.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

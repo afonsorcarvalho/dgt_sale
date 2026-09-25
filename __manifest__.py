@@ -31,6 +31,7 @@
     'data': [
         'security/dgt_sale_security.xml',
         'security/ir.model.access.csv',
+        'wizard/copy_spec_wizard_views.xml',
         'views/product_views.xml',
         'reports/report_sales_assinatura_template.xml',
         'reports/report_sales_client_template.xml',
